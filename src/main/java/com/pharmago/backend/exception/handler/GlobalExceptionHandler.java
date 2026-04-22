@@ -1,4 +1,4 @@
-package com.pharmago.backend.exeption.handler;
+package com.pharmago.backend.exception.handler;
 
 import com.pharmago.backend.exception.*;
 import lombok.extern.slf4j.Slf4j;

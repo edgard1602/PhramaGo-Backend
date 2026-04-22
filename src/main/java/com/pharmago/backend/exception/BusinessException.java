@@ -1,7 +1,5 @@
 package com.pharmago.backend.exception;
 
-import jakarta.validation.ValidationException;
-
 public sealed class BusinessException extends RuntimeException
         permits ResourceNotFoundException,
         ValidationException,

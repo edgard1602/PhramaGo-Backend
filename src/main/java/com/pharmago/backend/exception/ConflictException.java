@@ -1,7 +1,7 @@
 package com.pharmago.backend.exception;
 
 public final class ConflictException
-        extends com.pharmago.backend.exception.BusinessException {
+        extends BusinessException {
 
     public ConflictException(String message) {
         super(message, "CONFLICT_ERROR");
