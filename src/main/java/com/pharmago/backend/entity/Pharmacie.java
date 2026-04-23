@@ -46,13 +46,13 @@ public class Pharmacie {
     @NotNull(message = "La latitude est obligatoire")
     @DecimalMin(value = "-90.0", message = "Latitude invalide")
     @DecimalMax(value = "90.0", message = "Latitude invalide")
-    @Column(nullable = false, precision = 10, scale = 8)
+    @Column(nullable = false)
     private Double latitude;
 
     @NotNull(message = "La longitude est obligatoire")
     @DecimalMin(value = "-180.0", message = "Longitude invalide")
     @DecimalMax(value = "180.0", message = "Longitude invalide")
-    @Column(nullable = false, precision = 11, scale = 8)
+    @Column(nullable = false)
     private Double longitude;
 
     @Column(name = "is_active")
