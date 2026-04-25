@@ -22,6 +22,13 @@ target/
 *.iml
 *.ipr
 
+# Variables d'environnement
+.env
+*.env
+
+# Docker
+docker-compose.override.yml
+
 # Spring Boot
 application-prod.yml
 application-secrets.yml
