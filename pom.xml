@@ -60,6 +60,11 @@
 			<optional>true</optional>
 		</dependency>
 		-->
+		<!-- Client HTTP pour Google Places -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
