@@ -38,5 +38,12 @@ google:
   places:
     api-key: ${GOOGLE_API_KEY:ta-cle-ici}
 
+springdoc:
+  swagger-ui:
+    url: https://phramago-backend-production.up.railway.app/v3/api-docs
+  api-docs:
+    enabled: true
+
 server:
   port: 9090
+  forward-headers-strategy: framework
