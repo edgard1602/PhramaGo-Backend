@@ -8,15 +8,15 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/pharmago
-    username: pharmago_user
-    password: pharmago_pass
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pharmago}
+    username: ${SPRING_DATASOURCE_USERNAME:pharmago_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:pharmago_pass}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -45,5 +45,5 @@ springdoc:
     enabled: true
 
 server:
-  port: 9090
+  port: ${PORT:8080}
   forward-headers-strategy: framework
