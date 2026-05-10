@@ -34,5 +34,9 @@ pharmago:
   admin:
     api-key: ${ADMIN_API_KEY:pharmago-dev-key-2026}
 
+google:
+  places:
+    api-key: ${GOOGLE_API_KEY:ta-cle-ici}
+
 server:
   port: 9090

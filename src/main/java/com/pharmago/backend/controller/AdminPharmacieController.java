@@ -1,16 +1,22 @@
 package com.pharmago.backend.controller;
 
+import com.pharmago.backend.dto.request.ImportGooglePlacesRequest;
 import com.pharmago.backend.dto.request.PharmacieRequest;
+import com.pharmago.backend.dto.response.ImportResultResponse;
 import com.pharmago.backend.dto.response.PharmacieDetailResponse;
+import com.pharmago.backend.service.GooglePlacesService;
 import com.pharmago.backend.service.PharmacieService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/admin/pharmacies")
 @RequiredArgsConstructor
@@ -19,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 public class AdminPharmacieController {
 
     private final PharmacieService pharmacieService;
+
+    @Autowired
+    private GooglePlacesService googlePlacesService;
 
     @PostMapping
     @Operation(summary = "Créer une pharmacie")
@@ -56,5 +65,29 @@ public class AdminPharmacieController {
 
         return ResponseEntity.ok(
                 pharmacieService.toggleActif(id));
+    }
+
+
+    @PostMapping("/import-ville")
+    @Operation(
+            summary = "Importer toutes les pharmacies d'une ville",
+            description = "Importe automatiquement depuis Google Places. " +
+                    "Villes supportées : Lomé"
+    )
+    public ResponseEntity<ImportResultResponse> importerVille(
+            @RequestParam String ville) {
+
+        log.info("Import ville demandé : {}", ville);
+        return ResponseEntity.ok(
+                googlePlacesService.importerVille(ville));
+    }
+
+    @PostMapping("/import-quartier")
+    @Operation(summary = "Importer les pharmacies d'un quartier spécifique")
+    public ResponseEntity<ImportResultResponse> importerQuartier(
+            @Valid @RequestBody ImportGooglePlacesRequest request) {
+
+        return ResponseEntity.ok(
+                googlePlacesService.importerQuartier(request));
     }
 }
