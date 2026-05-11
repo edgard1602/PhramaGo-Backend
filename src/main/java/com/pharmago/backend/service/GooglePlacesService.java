@@ -37,23 +37,45 @@ public class GooglePlacesService {
 
     @Transactional
     public ImportResultResponse importerVille(String ville) {
-        log.info("Démarrage import ville : {}", ville);
+        List<VillesConfig.VilleConfig> zones =
+                VillesConfig.VILLES_ZONES.get(ville);
 
-        VillesConfig.VilleConfig config =
-                VillesConfig.VILLES.get(ville);
-
-        if (config == null) {
-            throw new ValidationException(
-                    "Ville non supportée : " + ville +
-                            ". Villes disponibles : " +
-                            VillesConfig.VILLES.keySet());
+        if (zones == null) {
+            throw new ValidationException("Ville non supportée : " + ville);
         }
 
-        return importerZone(
-                config.latitude(),
-                config.longitude(),
-                config.rayon(),
-                ville
+        int totalImportees = 0;
+        int totalDoublons = 0;
+        List<String> toutesImportees = new ArrayList<>();
+
+        for (VillesConfig.VilleConfig zone : zones) {
+            log.info("Import zone : {}", zone.nom());
+
+            ImportResultResponse result = importerZone(
+                    zone.latitude(),
+                    zone.longitude(),
+                    zone.rayon(),
+                    ville
+            );
+
+            totalImportees += result.importees();
+            totalDoublons += result.doublons();
+            toutesImportees.addAll(result.pharmaciesImportees());
+
+            // Pause entre les requêtes
+            try { Thread.sleep(1000); }
+            catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        return new ImportResultResponse(
+                totalImportees + totalDoublons,
+                totalImportees,
+                totalDoublons,
+                0,
+                toutesImportees,
+                List.of()
         );
     }
 
